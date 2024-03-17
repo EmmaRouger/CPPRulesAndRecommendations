@@ -1,41 +1,28 @@
+//MSC52-CPP states that a function that returns a value and has multiple paths must always return a value regardless of path taken
+//Mason Myre
 #include <iostream>
-#include <random>
-using namespace std;
 
-int helper();
-/*
-
-    All Possuble Paths the function can take has a return value. 
-
-*/
-int main(){
-    int exitPath = helper();
-    cout << "Exited Successfully with Path: " << exitPath << "\n";
-    
+//we have a function that takes a different path depending on the value passed in
+//this function is required to return a value
+int paths(int a){
+  if(a == 0){ //in the specified cases, we return a value
     return 0;
+  }
+  else if(a == 1){
+    return 4;
+  }
+  else if(a == 2){
+    return 9;
+  }
+  else if(a == 3){
+    return 16;
+  }
+  else{ //if none of the specified cases are the path taken, we have an else statement with a return to ensure a return regardlesss of path taken
+    return 25;
+  }
 }
 
-int helper(){
 
-    random_device randDevice;
-    minstd_rand0 engine(randDevice());
-
-    int rand = engine() % 3;
-    cout << "Generated: " << rand << "\n";
-    if (rand == 0)
-    {
-        return 0;
-    }
-    else if(rand==1){
-        return 1;
-    }
-    else if(rand==2){
-        return 2;
-    }
-    else if(rand==3){
-        return 3;
-    }
-    else{
-        return -1;
-    }
+int main(){
+  std::cout << paths(3) << " " << paths(12) << std::endl; //example code
 }

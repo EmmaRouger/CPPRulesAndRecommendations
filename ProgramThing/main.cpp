@@ -178,7 +178,7 @@ void printMenu2()
 /*
 
     Insert amount you want to gamble. Guess a number between 1 & 10.
-    Rules Used: MSC51, EXP54
+    Rules Used: MSC50, MSC51, EXP54
 
 */
 void gamble(ATMAccount *account){
