@@ -30,7 +30,7 @@ int main(){
 /*
     
     Helper method for ruleCon51 for accessing a val variable.
- 
+    
 */
 void valSet(mutex &mtx, int &valueToSet, int val){
     mtx.lock();
@@ -48,5 +48,5 @@ void valSet(mutex &mtx, int &valueToSet, int val){
 
     }
     mtx.unlock();
-     
+
 }
