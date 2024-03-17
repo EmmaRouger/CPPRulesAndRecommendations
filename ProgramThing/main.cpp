@@ -6,10 +6,9 @@ void gamble (ATMAccount account);
 void printMenu1();
 
 int main(){
-
+    int accountNumCounter = 2;
     ATMAccount acc1("Alfred Yankovic", 1, 1234, 8000);
     ATMAccount acc2("John Mann", 2, 1234, 10);
-
     vector<ATMAccount> vect {acc1,acc2};
 
     int choice = 0;
@@ -30,13 +29,34 @@ int main(){
             {
                 //make process for creating an new account and add it the vector
             }
-            else if (choice == 2)
-            {
-                //enter accout and pin
-
-                //print choices
+        else if (choice == 2)
+        {
+            int getAccountNum, getPinNum;
+            //enter account num and pin
+            cout<<"Enter Account Number\n> ";
+            cin >> getAccountNum;
+            cout<<endl;
+            if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
+                cout<<"Not a valid Account Number\n";
+                choice = 2;
             }
-            
+            else
+            {
+                cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
+                cin>>getPinNum;
+                cout<<"\n";
+                while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
+                {
+                    cout<<"Incorrect Pin\nEnter a Pin\n> ";
+                    cin>>getPinNum;
+                    cout<<"\n";
+                }
+                cout<<"Welcome to the program";
+                choice = -1;
+
+            }
+            //print choices
+        }
         }
 
     }
@@ -44,7 +64,7 @@ int main(){
 }
 
 void printMenu1(){
-    cout<<"1) Enter Account Number\n2) Create a new account\n> ";
+    cout<<"1) Create a new account\n2) Enter Account Number\n> ";
 }
 
 /*
