@@ -1,9 +1,14 @@
 #include <iostream>
 #include "ATMAccount.h"
 #include <random>
+#include <fstream>
+using namespace std;
+
 
 void gamble (ATMAccount account);
 void printMenu1();
+
+void create_check(ATMAccount account);
 
 int main(){
     int accountNumCounter = 2;
@@ -11,7 +16,9 @@ int main(){
     ATMAccount acc2("John Mann", 2, 1234, 10);
     vector<ATMAccount> vect {acc1,acc2};
 
+
     int choice = 0;
+
     cout<<"Welcome to The Casion ATM"<<endl;
     while(choice != -1)
     {
@@ -28,38 +35,90 @@ int main(){
             if(choice == 1)
             {
                 //make process for creating an new account and add it the vector
-            }
-        else if (choice == 2)
-        {
-            int getAccountNum, getPinNum;
-            //enter account num and pin
-            cout<<"Enter Account Number\n> ";
-            cin >> getAccountNum;
-            cout<<endl;
-            if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
-                cout<<"Not a valid Account Number\n";
+                // Account Name Setup
+                string accName = "";
+                int id = accountNumCounter+1;
+                accountNumCounter++;
+                int pin = 0;
+                cout << "Please enter an account name: ";
+                cin >> accName;
+                // Account Pin setup
+                cout << "Please enter a 4 digit pin for your account: ";
+                cin >> pin;
+                bool validPin = false;
+                int pinLength = 0;
+                while(!validPin){
+                    pinLength = log10(pin) + 1;
+                    if (pinLength == 4)
+                    {
+                        cout << "\nPin Accepted.\n";
+                        validPin = true;
+                    }
+                    else{
+                        cout << "\nInvalid pin. Please try again.";
+                        cout << "\nPlease enter a 4 digit pin for your account: ";
+                        cin >> pin;
+                    }
+                }
+
+                //Account Balance setup
+                int balance = 0;
+                cout << "\nPlease enter a starting balance: ";
+                cin >> balance;
+                bool validBalance = false;
+                while(!validBalance){
+                    if (balance > 0)
+                    {
+                        cout << "\nStarting balance set.";
+                        validBalance = true;
+
+                    }
+                    else{
+                        cout << "\nInvalid input. Please try again.";
+                        cout << "\nPlease enter a starting balance: ";
+                        cin >> balance;
+                    }
+
+                }
+                // Add Account to vector
+                ATMAccount newAcc(accName, id, pin, balance);
+                vect.push_back(newAcc);
+
+                cout << "\nAccount Added. Your account number is " << id <<"\n";
                 choice = 2;
             }
-            else
+            else if (choice == 2)
             {
-                cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
-                cin>>getPinNum;
-                cout<<"\n";
-                while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
+                int getAccountNum, getPinNum;
+                //enter account num and pin
+                cout<<"Enter Account Number\n> ";
+                cin >> getAccountNum;
+                cout<<endl;
+                if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
+                    cout<<"Not a valid Account Number\n";
+                    choice = 2;
+                }
+                else
                 {
-                    cout<<"Incorrect Pin\nEnter a Pin\n> ";
+                    cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
                     cin>>getPinNum;
                     cout<<"\n";
-                }
-                cout<<"Welcome to the program";
-                choice = -1;
+                    while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
+                    {
+                        cout<<"Incorrect Pin\nEnter a Pin\n> ";
+                        cin>>getPinNum;
+                        cout<<"\n";
+                    }
+                    cout<<"Welcome to the program";
+                    choice = -1;
 
-            }
+                }
             //print choices
-        }
+            }
         }
 
     }
+
 
 }
 
@@ -142,4 +201,59 @@ void gamble(ATMAccount account){
         cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
         account.withdrawal(gamble);
     }
+}
+
+
+
+void create_check(ATMAccount account)
+{
+    int amount ;
+    string recipient;
+    cout << "Check creation:" << endl;
+    cout << "please enter the amount you want to put on the check: ";
+    cin >> amount ;
+    cout << endl;
+    cout << "Enter the recipient of the check: ";
+    cin >> recipient;
+    cout << endl;
+
+    string fileName = "Check"+ to_string(account.getNumCheck());
+    fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+
+    if (!myFile.is_open()) {
+        std::cerr << "WARNING!!! Error: Failed to open file " << fileName << std::endl;
+        return;
+    }
+
+    myFile << "To : "<< recipient << endl ;
+    myFile << "Amount : " << amount << " dollars"<<endl;
+    myFile << "From : " << account.getAccountName()<<endl;
+
+    myFile.seekg(0, ios::beg); //allow to do both write and read from same opened filed
+
+    cout << "Data read from Check (make sure everything is right on the check): " << endl;
+    // Print the content of the file
+    string line;
+    while (getline(myFile, line)) {
+        cout << line << endl;
+    }
+
+    cout<< endl;
+
+    myFile.close();
+
+    cout << "Is the information correct (y/n): ";
+    string validator;
+    cin >> validator;
+    cout << endl;
+    if(validator=="y")
+    {
+        account.withdrawal(amount);
+        account.setNumCheck();
+    }
+    else
+    {
+        create_check(account);
+    }
+
 }

@@ -10,12 +10,15 @@ private:
     int balance;
     int pin;//limit to 4 digits on create
     int accountNumber;
+    int numCheck;
 
 public:
     ATMAccount(string nameForAccount, int enteredAccountNum, int enteredPin, int enteredBalance);
 
     string getAccountName() const { return nameOnAccount; }
     int checkBalance() const { return balance; }
+    int getNumCheck() const { return numCheck; }
+    void setNumCheck() { this->numCheck++ ;}
 
 //possibly change so it returns new balance?
     void withdrawal( int amount );
