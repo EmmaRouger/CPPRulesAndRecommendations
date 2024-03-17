@@ -5,7 +5,7 @@ ATMAccount::ATMAccount( string nameForAccount, int enteredAccountNum, int entere
     nameOnAccount{ nameForAccount },
     accountNumber{enteredAccountNum},
     balance { enteredBalance },
-    pin { enteredPin }{}
+    pin { enteredPin },numCheck(1){}
 
 bool ATMAccount::checkEnteredPin(int enteredPin)
 { return (enteredPin == this->pin); }

@@ -1,9 +1,12 @@
 #include <iostream>
-#include "ATMAccount.cpp"
+#include "ATMAccount.h"
 #include <random>
-// using namespace std;
+#include <fstream>
+using namespace std;
 
 void gamble (ATMAccount account);
+
+void create_check(ATMAccount account);
 
 int main(){
 
@@ -13,10 +16,7 @@ int main(){
 
     int choice = 0;
 
-    while(choice != -1)
-    {
-        
-    }
+    create_check(acc1);
 
 }
 
@@ -95,4 +95,59 @@ void gamble(ATMAccount account){
         cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
         account.withdrawal(gamble); 
     }
+}
+
+
+
+void create_check(ATMAccount account)
+{
+    int amount ;
+    string recipient;
+    cout << "Check creation:" << endl;
+    cout << "please enter the amount you want to put on the check: ";
+    cin >> amount ;
+    cout << endl;
+    cout << "Enter the recipient of the check: ";
+    cin >> recipient;
+    cout << endl;
+
+    string fileName = "Check"+ to_string(account.getNumCheck());
+    fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+
+    if (!myFile.is_open()) {
+        std::cerr << "WARNING!!! Error: Failed to open file " << fileName << std::endl;
+        return; 
+    }
+
+    myFile << "To : "<< recipient << endl ;
+    myFile << "Amount : " << amount << " dollars"<<endl;
+    myFile << "From : " << account.getAccountName()<<endl;
+
+    myFile.seekg(0, ios::beg); //allow to do both write and read from same opened filed
+
+    cout << "Data read from Check (make sure everything is right on the check): " << endl;
+    // Print the content of the file
+    string line;
+    while (getline(myFile, line)) {
+        cout << line << endl;
+    }
+
+    cout<< endl;
+
+    myFile.close();
+
+    cout << "Is the information correct (y/n): ";
+    string validator;
+    cin >> validator;
+    cout << endl;
+    if(validator=="y")
+    {
+        account.withdrawal(amount);
+        account.setNumCheck();
+    } 
+    else
+    {
+        create_check(account);
+    }
+
 }

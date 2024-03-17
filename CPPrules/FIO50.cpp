@@ -4,7 +4,7 @@
 
 void write_and_read(const std::string &fileName) {
 
-    std::fstream myFile(fileName, std::ios::in | std::ios::out);
+    std::fstream myFile(&fileName, std::ios::in | std::ios::out);
 
     if (!myFile.is_open()) {
         std::cerr << "WARNING!!! Error: Failed to open file " << fileName << std::endl;
