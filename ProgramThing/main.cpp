@@ -80,6 +80,8 @@ int main(){
                 ATMAccount newAcc(accName, id, pin, balance);
                 vect.push_back(newAcc); 
 
+                cout << "\nAccount Added. Your account number is " << id <<"\n";
+                choice = 2;
             }
             else if (choice == 2)
             {
