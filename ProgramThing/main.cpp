@@ -13,7 +13,7 @@ void create_check(ATMAccount *account);
 
 /*
     main function
-    uses Rule MEM51 DCL57 OOP55 DCL51
+    uses Rule EXP50 MEM51 DCL53 DCL57 OOP55 DCL51
 */
 int main(){
     int accountNumCounter = 2;
@@ -24,7 +24,8 @@ int main(){
 
     int choice = 0;
 
-    cout<<"Welcome to The Casion ATM"<<endl;
+    cout<<"Welcome to The Casino ATM"<<endl;
+    
     do
     {
         printMenu1();
