@@ -138,7 +138,7 @@ void printMenu1(){
 
 void printMenu2()
 {
-    cout<<"1) Check Balance\n2) Deposit\n3) Withdrawl\n4) Main Menu\n> ";
+    cout<<"1) Check Balance\n2) Deposit\n3) Withdrawl\n4) Create check\n5) Gamble\n6) Log Out\n> ";
 }
 
 /*
