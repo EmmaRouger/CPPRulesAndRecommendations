@@ -5,11 +5,16 @@
 using namespace std;
 
 
-void gamble (ATMAccount account);
+void gamble (ATMAccount *account);
 void printMenu1();
 void printMenu2();
-void create_check(ATMAccount account);
+void create_check(ATMAccount *account);
 
+
+/*
+    main function
+    uses Rule MEM51 DCL57 OOP55 DCL51
+*/
 int main(){
     int accountNumCounter = 2;
     ATMAccount acc1("Alfred Yankovic", 1, 1234, 8000);
@@ -20,12 +25,12 @@ int main(){
     int choice = 0;
 
     cout<<"Welcome to The Casion ATM"<<endl;
-    while(choice != -1)
+    do
     {
         printMenu1();
         cin>>choice;
         cout<<endl;
-        if(choice > 2 || choice < 1)
+        if(choice > 3 || choice < (-1))
         {
             cout<<"Invalid Choice\n";
             choice = 0;
@@ -92,16 +97,18 @@ int main(){
             cout<<"Enter Account Number\n> ";
             cin >> getAccountNum;
             cout<<endl;
+
             if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
                 cout<<"Not a valid Account Number\n";
                 choice = 2;
             }
             else
             {
-                cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
+                ATMAccount *account = &vect[getAccountNum-1];
+                cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
-                while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
+                while(!account->checkEnteredPin(getPinNum))
                 {
                     cout<<"Incorrect Pin\nEnter a Pin\n> ";
                     cin>>getPinNum;
@@ -109,36 +116,63 @@ int main(){
                 }
 
                 //print new choices when in account
-                while(choice != 4)
+                do
                 {
                     printMenu2();
                     cin>>choice;
                     cout<<"\n";
-                    if(choice > 4 || choice < 1)
+                    if(choice > 6 || choice < 1)
                     {
                         cout<<"Invalice Choice\n";
                         choice = 0;
                     }
                     if(choice == 1)
                     {
-                        cout<<"Current Balance: $"<<vect[getAccountNum-1].checkBalance()<<endl;
+                        cout<<"Current Balance: $"<<account->checkBalance()<<endl;
                     }
-                }
-                //should have a choice to exit to main menu
-                }
+                    else if(choice == 2)
+                    {
+                        int amount;
+                        cout << "Please enter the amount you want to deposit\n>";
+                        cin >> amount;
+
+                        account->deposit(amount);
+                        cout << "New Account Balance: $"<<account->checkBalance()<<endl;
+                    }
+                    else if(choice == 3)
+                    {
+                        int amount;
+                        cout << "Please enter the amount you want to withdraw\n>";
+                        cin >> amount;
+
+                        account->withdrawal(amount);
+                        cout << "New Account Balance: $"<<account->checkBalance()<<endl;
+                    }
+                    else if(choice == 4)
+                    {
+                        create_check(account);
+                    }
+                }while(choice != 6);
+                delete account;
+            //should have a choice to exit to main menu
             }
-    }
+        }
+        else if(choice == 3)
+        {
+
+        }
+    }while(choice != -1);
 
 
 }
 
 void printMenu1(){
-    cout<<"1) Create a new account\n2) Enter Account Number\n> ";
+    cout<<"1) Create a new account\n2) Enter Account Number\n3) Forgot Account Number\n> ";
 }
 
 void printMenu2()
 {
-    cout<<"1) Check Balance\n2) Deposit\n3) Withdrawl\n4) Create check\n5) Gamble\n6) Log Out\n> ";
+    cout<<"1) Check Balance\n2) Deposit\n3) Withdrawal\n4) Create check\n5) Gamble\n6) Log Out\n> ";
 }
 
 /*
@@ -147,7 +181,7 @@ void printMenu2()
     Rules Used: MSC51, EXP54
 
 */
-void gamble(ATMAccount account){
+void gamble(ATMAccount *account){
 
     cout << "If you guess the lucky number, you can get back triple of your money back.\n" <<
     "If you guess the unlucky number, you lose double the amount you gambled!\n" <<
@@ -161,7 +195,7 @@ void gamble(ATMAccount account){
     bool validAmount = false;
     while (!validAmount)
     {
-        if (gamble > 0 && gamble <= account.checkBalance())
+        if (gamble > 0 && gamble <= account->checkBalance())
         {
             validAmount = true;
         }
@@ -204,24 +238,29 @@ void gamble(ATMAccount account){
     if (input == lucky) // Big Win
     {
         cout << "You got it! Lucky you! Depositing: " << gamble*3 << " into your account.\n";
-        account.deposit(gamble*3);
+        account->deposit(gamble*3);
     }
     else if (input == unlucky) //Big Lose
     {
         cout << "Yeouch! How unfortunate, you got the unlucky number... Removing: " << gamble*2 << " from your account.\n";
-        account.withdrawal(gamble*2);
+        account->withdrawal(gamble*2);
     }
     else // Lose
     {
         cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
-        account.withdrawal(gamble);
+        account->withdrawal(gamble);
     }
 }
 
 
-
-void create_check(ATMAccount account)
+/*
+    create a check
+    use Rule FIO50 DLC57
+*/
+void create_check(ATMAccount *account)
 {
+    
+    
     int amount ;
     string recipient;
     cout << "Check creation:" << endl;
@@ -232,30 +271,34 @@ void create_check(ATMAccount account)
     cin >> recipient;
     cout << endl;
 
-    string fileName = "Check"+ to_string(account.getNumCheck());
-    fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+    try
+    {
+        string fileName = "Check"+ to_string(account->getNumCheck());
+        fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+            
+        myFile << "To : "<< recipient << endl ;
+        myFile << "Amount : " << amount << " dollars"<<endl;
+        myFile << "From : " << account->getAccountName()<<endl;
 
-    if (!myFile.is_open()) {
-        std::cerr << "WARNING!!! Error: Failed to open file " << fileName << std::endl;
-        return;
+        myFile.seekg(0, ios::beg); //allow to do both write and read from same opened filed
+
+        cout << "Data read from Check (make sure everything is right on the check): " << endl;
+        // Print the content of the file
+        string line;
+        while (getline(myFile, line)) {
+            cout << line << endl;
+        }
+
+        cout<< endl;
+
+        myFile.close();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        fclose(myFile);
     }
 
-    myFile << "To : "<< recipient << endl ;
-    myFile << "Amount : " << amount << " dollars"<<endl;
-    myFile << "From : " << account.getAccountName()<<endl;
-
-    myFile.seekg(0, ios::beg); //allow to do both write and read from same opened filed
-
-    cout << "Data read from Check (make sure everything is right on the check): " << endl;
-    // Print the content of the file
-    string line;
-    while (getline(myFile, line)) {
-        cout << line << endl;
-    }
-
-    cout<< endl;
-
-    myFile.close();
 
     cout << "Is the information correct (y/n): ";
     string validator;
@@ -263,8 +306,8 @@ void create_check(ATMAccount account)
     cout << endl;
     if(validator=="y")
     {
-        account.withdrawal(amount);
-        account.setNumCheck();
+        account->withdrawal(amount);
+        account->setNumCheck();
     }
     else
     {
