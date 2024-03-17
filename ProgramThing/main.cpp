@@ -7,7 +7,7 @@ using namespace std;
 
 void gamble (ATMAccount account);
 void printMenu1();
-
+void printMenu2();
 void create_check(ATMAccount account);
 
 int main(){
@@ -22,101 +22,111 @@ int main(){
     cout<<"Welcome to The Casion ATM"<<endl;
     while(choice != -1)
     {
-        if(choice == 0)
+        printMenu1();
+        cin>>choice;
+        cout<<endl;
+        if(choice > 2 || choice < 1)
         {
-            printMenu1();
-            cin>>choice;
-            cout<<endl;
-            if(choice > 2 || choice < 1)
-            {
-                cout<<"Invalid Choice\n";
-                choice = 0;
+            cout<<"Invalid Choice\n";
+            choice = 0;
+        }
+        if(choice == 1)
+        {
+            //make process for creating an new account and add it the vector
+            // Account Name Setup
+            string accName = "";
+            int id = accountNumCounter+1;
+            accountNumCounter++;
+            int pin = 0;
+            cout << "Please enter an account name: ";
+            cin >> accName;
+            // Account Pin setup
+            cout << "Please enter a 4 digit pin for your account: ";
+            cin >> pin;
+            bool validPin = false;
+            int pinLength = 0;
+            while(!validPin){
+                pinLength = log10(pin) + 1;
+                if (pinLength == 4)
+                {
+                    cout << "\nPin Accepted.\n";
+                    validPin = true;
+                }
+                else{
+                    cout << "\nInvalid pin. Please try again.";
+                    cout << "\nPlease enter a 4 digit pin for your account: ";
+                    cin >> pin;
+                }
             }
-            if(choice == 1)
-            {
-                //make process for creating an new account and add it the vector
-                // Account Name Setup
-                string accName = "";
-                int id = accountNumCounter+1;
-                accountNumCounter++;
-                int pin = 0;
-                cout << "Please enter an account name: ";
-                cin >> accName;
-                // Account Pin setup
-                cout << "Please enter a 4 digit pin for your account: ";
-                cin >> pin;
-                bool validPin = false;
-                int pinLength = 0;
-                while(!validPin){
-                    pinLength = log10(pin) + 1;
-                    if (pinLength == 4)
-                    {
-                        cout << "\nPin Accepted.\n";
-                        validPin = true;
-                    }
-                    else{
-                        cout << "\nInvalid pin. Please try again.";
-                        cout << "\nPlease enter a 4 digit pin for your account: ";
-                        cin >> pin;
-                    }
-                }
 
-                //Account Balance setup
-                int balance = 0;
-                cout << "\nPlease enter a starting balance: ";
-                cin >> balance;
-                bool validBalance = false;
-                while(!validBalance){
-                    if (balance > 0)
-                    {
-                        cout << "\nStarting balance set.";
-                        validBalance = true;
-
-                    }
-                    else{
-                        cout << "\nInvalid input. Please try again.";
-                        cout << "\nPlease enter a starting balance: ";
-                        cin >> balance;
-                    }
+            //Account Balance setup
+            int balance = 0;
+            cout << "\nPlease enter a starting balance: ";
+            cin >> balance;
+            bool validBalance = false;
+            while(!validBalance){
+                if (balance > 0)
+                {
+                    cout << "\nStarting balance set.";
+                    validBalance = true;
 
                 }
-                // Add Account to vector
-                ATMAccount newAcc(accName, id, pin, balance);
-                vect.push_back(newAcc);
+                else{
+                    cout << "\nInvalid input. Please try again.";
+                    cout << "\nPlease enter a starting balance: ";
+                    cin >> balance;
+                }
 
-                cout << "\nAccount Added. Your account number is " << id <<"\n";
+            }
+            // Add Account to vector
+            ATMAccount newAcc(accName, id, pin, balance);
+            vect.push_back(newAcc);
+
+            cout << "\nAccount Added. Your account number is " << id <<"\n";
+            choice = 2;
+        }
+        else if (choice == 2)
+        {
+            int getAccountNum, getPinNum;
+            //enter account num and pin
+            cout<<"Enter Account Number\n> ";
+            cin >> getAccountNum;
+            cout<<endl;
+            if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
+                cout<<"Not a valid Account Number\n";
                 choice = 2;
             }
-            else if (choice == 2)
+            else
             {
-                int getAccountNum, getPinNum;
-                //enter account num and pin
-                cout<<"Enter Account Number\n> ";
-                cin >> getAccountNum;
-                cout<<endl;
-                if((getAccountNum > accountNumCounter) || (getAccountNum < 1)){
-                    cout<<"Not a valid Account Number\n";
-                    choice = 2;
-                }
-                else
+                cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
+                cin>>getPinNum;
+                cout<<"\n";
+                while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
                 {
-                    cout<<"Welcome "<< vect[getAccountNum-1].getAccountName()<<"\nEnter Pin\n> ";
+                    cout<<"Incorrect Pin\nEnter a Pin\n> ";
                     cin>>getPinNum;
                     cout<<"\n";
-                    while(!vect[getAccountNum-1].checkEnteredPin(getPinNum))
-                    {
-                        cout<<"Incorrect Pin\nEnter a Pin\n> ";
-                        cin>>getPinNum;
-                        cout<<"\n";
-                    }
-                    cout<<"Welcome to the program";
-                    choice = -1;
-
                 }
-            //print choices
-            }
-        }
 
+                //print new choices when in account
+                while(choice != 4)
+                {
+                    printMenu2();
+                    cin>>choice;
+                    cout<<"\n";
+                    if(choice > 4 || choice < 1)
+                    {
+                        cout<<"Invalice Choice\n";
+                        choice = 0;
+                    }
+                    if(choice == 1)
+                    {
+                        cout<<"Current Balance: $"<<vect[getAccountNum-1].checkBalance()<<endl;
+                    }
+                }
+                //should have a choice to exit to main menu
+                }
+            }
     }
 
 
@@ -124,6 +134,11 @@ int main(){
 
 void printMenu1(){
     cout<<"1) Create a new account\n2) Enter Account Number\n> ";
+}
+
+void printMenu2()
+{
+    cout<<"1) Check Balance\n2) Deposit\n3) Withdrawl\n4) Main Menu\n> ";
 }
 
 /*
