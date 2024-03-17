@@ -4,20 +4,108 @@
 #include <fstream>
 using namespace std;
 
+
 void gamble (ATMAccount account);
+void printMenu1();
 
 void create_check(ATMAccount account);
 
 int main(){
-
+    int accountNumCounter = 2;
     ATMAccount acc1("Alfred Yankovic", 1, 1234, 8000);
+    ATMAccount acc2("John Mann", 2, 1234, 10);
 
-    vector<ATMAccount> vect {acc1};
+    vector<ATMAccount> vect {acc1,acc2};
 
+    
     int choice = 0;
 
-    create_check(acc1);
+    cout<<"Welcome to The Casion ATM"<<endl;
+    while(choice != -1)
+    {
+        if(choice == 0)
+        {
+            printMenu1();
+            cin>>choice;
+            cout<<endl;
+            if(choice > 2 || choice < 1)
+            {
+                cout<<"Invalid Choice\n";
+                choice = 0;
+            }
+            if(choice == 1)
+            {
+                //make process for creating an new account and add it the vector
+                
+                // Account Name Setup
+                string accName = "";
+                int id = accountNumCounter+1;
+                accountNumCounter++;
+                int pin = 0;
+                cout << "Please enter an account name: ";
+                cin >> accName;
+                // Account Pin setup
+                cout << "Please enter a 4 digit pin for your account: ";
+                cin >> pin;
+                bool validPin = false;
+                int pinLength = 0;
+                while(!validPin){
+                    pinLength = log10(pin) + 1;
+                    if (pinLength == 4)
+                    {
+                        cout << "\nPin Accepted.\n";
+                        validPin = true;
+                    }
+                    else{
+                        cout << "\nInvalid pin. Please try again.";
+                        cout << "\nPlease enter a 4 digit pin for your account: ";
+                        cin >> pin;
+                    }
+                }
 
+                //Account Balance setup
+                int balance = 0;
+                cout << "\nPlease enter a starting balance: ";
+                cin >> balance;
+                bool validBalance = false;
+                while(!validBalance){
+                    if (balance > 0)
+                    {
+                        cout << "\nStarting balance set.";
+                        validBalance = true;
+
+                    }
+                    else{
+                        cout << "\nInvalid input. Please try again.";
+                        cout << "\nPlease enter a starting balance: ";
+                        cin >> balance;
+                    }
+                    
+                }
+                // Add Account to vector
+                ATMAccount newAcc(accName, id, pin, balance);
+                vect.push_back(newAcc); 
+
+                cout << "\nAccount Added. Your account number is " << id <<"\n";
+                choice = 2;
+            }
+            else if (choice == 2)
+            {
+                //enter accout and pin
+
+                //print choices
+            
+            }
+            
+        }
+
+    }
+
+
+}
+
+void printMenu1(){
+    cout<<"1) Enter Account Number\n2) Create a new account\n> ";
 }
 
 /*
@@ -28,13 +116,13 @@ int main(){
 */
 void gamble(ATMAccount account){
 
-    std::cout << "If you guess the lucky number, you can get back triple of your money back.\n" <<
+    cout << "If you guess the lucky number, you can get back triple of your money back.\n" <<
     "If you guess the unlucky number, you lose double the amount you gambled!\n" <<
     "If you get neither, you lose the amount you gambled\n" <<
     "Always remember: there is no losing in gambling, only quitting!\n";
-    
+
     int gamble = 0;
-    
+
     cout << "Enter an amount to gamble: ";
     cin >> gamble;
     bool validAmount = false;
@@ -47,9 +135,9 @@ void gamble(ATMAccount account){
         else{
             cout << "Invalid, please enter an amount to gamble: ";
             cin >> gamble;
-        }  
+        }
     }
-    
+
 
     random_device fate;
     minstd_rand0 engine(fate());
@@ -67,7 +155,7 @@ void gamble(ATMAccount account){
     int input = 0;
     bool validInput = false;
     cin >> input;
-    
+
     while (!validInput){
         if (input >= 0 && input <= 10)
         {
@@ -83,17 +171,17 @@ void gamble(ATMAccount account){
     if (input == lucky) // Big Win
     {
         cout << "You got it! Lucky you! Depositing: " << gamble*3 << " into your account.\n";
-        account.deposit(gamble*3);         
+        account.deposit(gamble*3);
     }
     else if (input == unlucky) //Big Lose
     {
         cout << "Yeouch! How unfortunate, you got the unlucky number... Removing: " << gamble*2 << " from your account.\n";
-        account.withdrawal(gamble*2); 
+        account.withdrawal(gamble*2);
     }
-    else // Lose 
+    else // Lose
     {
         cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
-        account.withdrawal(gamble); 
+        account.withdrawal(gamble);
     }
 }
 
