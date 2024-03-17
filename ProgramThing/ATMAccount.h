@@ -1,16 +1,20 @@
+#ifndef ATM_ACCOUNT
+#define ATM_ACCOUNT
 #include <string>
+using namespace std;
 
 class ATMAccount{
 
 private:
-    std::string nameOnAccount;
+    string nameOnAccount;
     int balance;
     int pin;//limit to 4 digits on create
+    int accountNumber;
 
 public:
-    ATMAccount(std::string nameForAccount,int pin, int enteredBalance);
+    ATMAccount(string nameForAccount, int enteredAccountNum, int enteredPin, int enteredBalance);
 
-    std::string getAccountName() const { return nameOnAccount; }
+    string getAccountName() const { return nameOnAccount; }
     int checkBalance() const { return balance; }
 
 //possibly change so it returns new balance?
@@ -19,3 +23,5 @@ public:
 
     bool checkEnteredPin( int enteredPin );
 };
+
+#endif
