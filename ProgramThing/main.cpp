@@ -12,10 +12,12 @@ void printMenu2(void); //DCL20
 void create_check(ATMAccount *account);
 int * shuffle(int copyMe [], int size);
 
-
+//DLC58-CPP  -  we never modify the standared namespaces
+//EXP63 - Never moved values so we never rely on moved-from object assumptions
+////DLC52-CPP - Never use Const on a reference Type
 /*
     main function
-    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54
+    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54 EXP53
     uses Recommendations EXP15
 */
 int main(){
@@ -108,11 +110,11 @@ int main(){
             }
             else
             {
-                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list
+                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list //Follows MEM52 - no need to check for null
                 cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
-                while(!account->checkEnteredPin(getPinNum)) 
+                while(!account->checkEnteredPin(getPinNum))
                 {
                     cout<<"Incorrect Pin\nEnter a Pin\n> ";
                     cin>>getPinNum;
@@ -170,7 +172,7 @@ int main(){
             cout << "Enter your name on the account: ";
             cin >> name;
             bool found=false;
-            for (auto it = vect.begin(); it != vect.end(); ++it) //CTR54
+            for (auto it = vect.begin(); it != vect.end(); ++it) //CTR54 //CRT53 - Never goes outside the iterator ranges
             {
                 if(it->getAccountName() == name)
                 {
@@ -377,7 +379,7 @@ void create_check(ATMAccount *account)
 
         myFile.close();
     }
-    catch(const std::exception& e)//DCL 57
+    catch(const std::exception& e)//DCL 57 //ERR54 - This is the lowest level of derived exception
     {
         std::cerr << e.what() << '\n';
         exit(1);
