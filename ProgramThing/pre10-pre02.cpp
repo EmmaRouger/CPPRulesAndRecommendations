@@ -1,12 +1,12 @@
 //Recommendation PRE10-C and PRE02
 
 #include <iostream>
-
+//use of PRE02 with parenthesys when using x and y
 #define SWAP(x, y) \
   do { \
-    if ((x) < (y)) { \ //PRE02
+    if ((x) < (y)) { \
       int temp = (x); \
-      (x) = (y); \ //PRE02
+      (x) = (y); \
       (y) = temp; \
     } else { \
       std::cout<<"The first number is greater than the second"<<std::endl; \
