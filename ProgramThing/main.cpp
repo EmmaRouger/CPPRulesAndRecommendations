@@ -360,7 +360,7 @@ void create_check(ATMAccount *account)
     try
     {//FIO50
         string fileName = "Check"+ to_string(account->getNumCheck()); //STR52 - valid reference to a basic_string
-        fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+        fstream myFile(fileName, ios::in | ios::out | ios::trunc); //FIO01 - accessing file via file descriptors
 
         myFile << "To : "<< recipient << endl ;
         myFile << "Amount : " << amount << " dollars"<<endl;
