@@ -13,7 +13,7 @@ void create_check(ATMAccount *account);
 
 /*
     main function
-    uses Rule EXP50 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51
+    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54
 */
 int main(){
     int accountNumCounter = 2;
@@ -105,7 +105,7 @@ int main(){
             }
             else
             {
-                ATMAccount *account = &vect[getAccountNum-1]; //follows rule CTR55 - Don't access nonexistent element in a list
+                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list
                 cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
@@ -161,13 +161,13 @@ int main(){
             //should have a choice to exit to main menu
             }
         }
-        else if(choice == 3) 
+        else if(choice == 3)
         {
             string name;
             cout << "Enter your name on the account: ";
             cin >> name;
             bool found=false;
-            for (auto it = vect.begin(); it != vect.end(); ++it) 
+            for (auto it = vect.begin(); it != vect.end(); ++it) //CTR54
             {
                 if(it->getAccountName() == name)
                 {
@@ -227,19 +227,26 @@ void gamble(ATMAccount *account){
             cin >> gamble;
         }
     }
-
-
+    
+    // MSC51 - Optimal random number generation
+    // 
     random_device fate;
     minstd_rand0 engine(fate());
 
-    int lucky = engine() % 10;
-    int unlucky = engine() % 10;
+    // int lucky = engine() % 10;
+    // int unlucky = engine() % 10;
 
-    while (lucky == unlucky)
+    // while (lucky == unlucky)
+    // {
+    //     unlucky = engine() % 10;
+    // }
+
+    int randomArr [20] = {0};
+    for (int i = 0; i < 20; i++)
     {
-        int unlucky = engine() % 10;
+        randomArr[i] = engine % 99;
     }
-
+    
     cout << "\nPlease type a number between 0 & 10: ";
 
     int input = 0;

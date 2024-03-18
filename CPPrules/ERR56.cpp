@@ -3,7 +3,7 @@ using namespace std;
 
 /*
 
-    Runs through an array, an error occurs but program state is not altered and continues. 
+    Runs through an array, an error occurs but program state is not altered and continues.
 
 */
 int main(){

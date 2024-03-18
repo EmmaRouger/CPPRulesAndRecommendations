@@ -1,5 +1,5 @@
-#ifndef ATM_ACCOUNT
-#define ATM_ACCOUNT
+#ifndef ATM_ACCOUNT_H
+#define ATM_ACCOUNT_H
 #include <string>
 #include <iostream>
 using namespace std;
