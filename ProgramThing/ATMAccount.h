@@ -1,3 +1,4 @@
+//PRE06-C - Endclosed header files with guards
 #ifndef ATM_ACCOUNT_H
 #define ATM_ACCOUNT_H
 #include <string>
