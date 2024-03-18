@@ -326,7 +326,7 @@ void gamble(ATMAccount *account){
 int * shuffle(int copyMe [], int size){
     int * shuffledArr = new int [20] {0};
     int * shuffledArrPtr = shuffledArr;
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++) //CTR50 - makes sure the indices are within the valid range
     {
         shuffledArr[i] = copyMe[i];
     }
