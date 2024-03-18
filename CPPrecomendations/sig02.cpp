@@ -1,4 +1,4 @@
-//Recommendation SIG02-C
+//SIG02-C. Avoid using signals to implement normal functionality
 
 #include <iostream>
 #include <thread>

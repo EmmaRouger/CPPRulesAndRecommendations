@@ -16,7 +16,7 @@ void ATMAccount::withdrawal( int amount ) //EXP55
     if(this->balance > amount) //STR53 - Checks that the balance is within the range of the amount the person is able to withdraw
                                //EXP15 - No semicolon after the if statement
         #define withdraw(a, b) (a-b)//PRE01
-        this->balance = withdraw(this->balance, amount); 
+        this->balance = withdraw(this->balance, amount);
     else
         cout<<"Insufficient Funds";
 

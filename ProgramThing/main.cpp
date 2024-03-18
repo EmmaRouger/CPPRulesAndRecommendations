@@ -16,6 +16,7 @@ int * shuffle(int copyMe [], int size);
 //EXP63 - Never moved values so we never rely on moved-from object assumptions
 //DLC52-CPP - Never use Const on a reference Type
 //MEM03-C - No sensitive data is used to be sanitized
+//MEM57 - Did not use default operator new for over-alignment types
 /*
     main function
     uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54 EXP53
@@ -323,6 +324,7 @@ void gamble(ATMAccount *account){
 
     Creates a copy of a given array and shuffles the copied array
     Uses CTR52
+    API05 - Allows to take any size array
 */
 int * shuffle(int copyMe [], int size){
     int * shuffledArr = new int [20] {0};

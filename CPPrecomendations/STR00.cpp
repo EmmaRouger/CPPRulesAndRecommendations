@@ -1,4 +1,4 @@
-//represent characters using an appropriate type
+//STR00-C. Represent characters using an appropriate type
 //Mason Myre
 #include <iostream>
 using namespace std;

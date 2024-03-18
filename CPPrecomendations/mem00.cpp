@@ -1,5 +1,4 @@
-//Recommendation MEM00-C
-//Allocate and deallocate memory in the same module and at the same abstraction level
+//MEM00-C. Allocate and free memory in the same module, at the same level of abstraction
 
 #include <iostream>
 

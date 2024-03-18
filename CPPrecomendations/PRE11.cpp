@@ -1,3 +1,4 @@
+//PRE11-C. Do not conclude macro definitions with a semicolon
 #include <iostream>
 using namespace std;
 

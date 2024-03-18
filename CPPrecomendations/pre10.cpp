@@ -1,4 +1,4 @@
-//Recommendation PRE10-C
+//PRE10-C. Wrap multistatement macros in a do-while loop
 
 #include <iostream>
 

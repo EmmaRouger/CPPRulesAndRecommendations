@@ -1,3 +1,4 @@
+//API10-C. APIs should have security options enabled by default
 #include <iostream>
 using namespace std;
 
@@ -5,7 +6,7 @@ int * arr01Helper(int arr [], int size);
 int main();
 
 /*
-    Returns an array pointer with double the size. 
+    Returns an array pointer with double the size.
 */
 int * arr01Helper(int arr [], int size){
     int * newArr = new int [size*2] {0};
@@ -29,9 +30,9 @@ int main(){
     int * newArrPointer = arr01Helper(arr, arr1Size);
 
     cout << "Size: " << arr1Size << "\n";
-    
+
     cout << "Print new Array with double size: \n";
-    
+
     for (int i = 0; i < arr1Size*2; i++)
     {
         cout << *(newArrPointer + i) << " | ";
