@@ -23,7 +23,7 @@ private:
 public:
     ATMAccount(string nameForAccount, int enteredAccountNum, int enteredPin, int enteredBalance);
 
-    string getAccountName() const { return nameOnAccount; } //STR50 - Guareatees storage for string
+    string getAccountName() const { return nameOnAccount; } //STR50 - Guarantees storage for string
     int checkBalance() const { return balance; }
     int getAccountNum() const { return accountNumber; }
     int getNumCheck() const { return numCheck; }
