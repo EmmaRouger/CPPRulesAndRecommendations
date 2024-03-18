@@ -1,4 +1,5 @@
-//MSC52-CPP states that a function that returns a value and has multiple paths must always return a value regardless of path taken
+//MSC52-CPP states that a function that returns a value and has 
+//multiple paths must always return a value regardless of path taken
 //Mason Myre
 #include <iostream>
 
@@ -17,7 +18,8 @@ int paths(int a){
   else if(a == 3){
     return 16;
   }
-  else{ //if none of the specified cases are the path taken, we have an else statement with a return to ensure a return regardlesss of path taken
+    //if none of the specified cases are the path taken, we have an
+  else{ //else statement with a return to ensure a return regardlesss of path taken
     return 25;
   }
 }

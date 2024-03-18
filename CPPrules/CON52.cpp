@@ -1,7 +1,6 @@
 //Mason Myre
 #include <iostream>
 using namespace std;
-
 struct t {
   unsigned char it; //define as char
   unsigned char broken; //to allow defined bahavior
@@ -21,18 +20,8 @@ int main(int argc, char const *argv[]) {
 
   a(example);
   b(example);
-
-
+  
   cout << example.it << ", " << example.broken << endl;
 
-  return 0;
+  return 0
 }
-
-
-
-
-
-
-//spacing
-
-//in case it's not obvious, I have no clue as to what I'm doing

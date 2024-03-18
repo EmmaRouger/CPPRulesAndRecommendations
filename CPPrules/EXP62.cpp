@@ -11,7 +11,7 @@ struct Structure {
 
 void f() {
     Structure *s = new Structure;
-    s->i=s->j=s->k=2
+    s->i=s->j=s->k=2;
     std::cout << "Values before clearing: i = " << s->i << ", j = " << s->j << ", k = " << s->k << std::endl;
 
     s->clear();
