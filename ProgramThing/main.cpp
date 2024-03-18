@@ -189,7 +189,6 @@ int main(){
         }
     }while(choice != -1); //EXP 20 rec
 
-    
     vect.clear(); // EXP62 //CTR51 //MEM34
 
 }
@@ -233,9 +232,9 @@ void gamble(ATMAccount *account){
             cin >> gamble;
         }
     }
-    
+
     // MSC51 - Optimal random number generation
-    // 
+    //
     random_device fate;
     minstd_rand0 engine(fate());
 
@@ -252,7 +251,7 @@ void gamble(ATMAccount *account){
     {
         randomArr[i] = engine() % 99;
     }
-    
+
     cout << "\nPlease select a number from the list: \n";
     for (int i : randomArr)
     {
@@ -261,15 +260,15 @@ void gamble(ATMAccount *account){
 
     // Shuffle
     int * shuffledArr = shuffle(randomArr, (sizeof(randomArr)/sizeof(randomArr[0])));
-    
+
 
     vector<int> lucky;
     for (int i = 0; i < 5; i++)
-    {   
+    {
         int temp = *(shuffledArr+i);
         lucky.push_back(temp);
     }
-    
+
     vector<int> unlucky;
     for (int i = 19; i > 14; i--)
     {
