@@ -1,7 +1,14 @@
 #ifndef ATM_ACCOUNT
 #define ATM_ACCOUNT
 #include <string>
+#include <iostream>
 using namespace std;
+
+// namespace n{ //rule DCL59 - defining a named namespace (as opposed to a nonnamed namespace) in a header file
+//     void printHello(){
+//         cout << "Hello, World!\n";
+//     }
+// }
 
 class ATMAccount{
 
@@ -17,6 +24,7 @@ public:
 
     string getAccountName() const { return nameOnAccount; }
     int checkBalance() const { return balance; }
+    int getAccountNum() const { return accountNumber; }
     int getNumCheck() const { return numCheck; }
     void setNumCheck() { this->numCheck++ ;}
 

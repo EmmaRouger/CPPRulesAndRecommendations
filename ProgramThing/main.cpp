@@ -6,14 +6,14 @@ using namespace std;
 
 
 void gamble (ATMAccount *account);
-void printMenu1();
-void printMenu2();
+void printMenu1(void); //uses DCL20 - use void when a method takes no parameters
+void printMenu2(void); //DCL20
 void create_check(ATMAccount *account);
 
 
 /*
     main function
-    uses Rule EXP50 MEM51 DCL53 DCL57 OOP55 DCL51
+    uses Rule EXP50 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51
 */
 int main(){
     int accountNumCounter = 2;
@@ -25,7 +25,7 @@ int main(){
     int choice = 0;
 
     cout<<"Welcome to The Casino ATM"<<endl;
-    
+
     do
     {
         printMenu1();
@@ -105,11 +105,11 @@ int main(){
             }
             else
             {
-                ATMAccount *account = &vect[getAccountNum-1];
+                ATMAccount *account = &vect[getAccountNum-1]; //follows rule CTR55 - Don't access nonexistent element in a list
                 cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
-                while(!account->checkEnteredPin(getPinNum))
+                while(!account->checkEnteredPin(getPinNum)) 
                 {
                     cout<<"Incorrect Pin\nEnter a Pin\n> ";
                     cin>>getPinNum;
@@ -153,25 +153,46 @@ int main(){
                     {
                         create_check(account);
                     }
+                    else if(choice == 5){
+                        gamble( &(vect.at(getAccountNum)));
+                    }
                 }while(choice != 6);
-                delete account;
+                delete account; //MEM51, MEM53
             //should have a choice to exit to main menu
             }
         }
-        else if(choice == 3)
+        else if(choice == 3) 
         {
+            string name;
+            cout << "Enter your name on the account: ";
+            cin >> name;
+            bool found=false;
+            for (auto it = vect.begin(); it != vect.end(); ++it) 
+            {
+                if(it->getAccountName() == name)
+                {
+                    cout << "Your Account Number is: " << it->getAccountNum()<<endl;
+                    found=true;
+                }
+            }
 
+            if(!found)
+            {
+                cout << "No Account Link to the name you Entered: "<< name<< endl;
+            }
         }
-    }while(choice != -1);
+    }while(choice != -1); //EXP 20 rec
 
+    
+    vect.clear(); // EXP62 //CTR51 //MEM34
 
 }
 
-void printMenu1(){
+void printMenu1(void){ //uses DCL20 - use 'void' when a method does not take in any parameters
     cout<<"1) Create a new account\n2) Enter Account Number\n3) Forgot Account Number\n> ";
 }
 
-void printMenu2()
+void printMenu2(void) //uses DCL20
 {
     cout<<"1) Check Balance\n2) Deposit\n3) Withdrawal\n4) Create check\n5) Gamble\n6) Log Out\n> ";
 }
@@ -189,7 +210,8 @@ void gamble(ATMAccount *account){
     "If you get neither, you lose the amount you gambled\n" <<
     "Always remember: there is no losing in gambling, only quitting!\n";
 
-    int gamble = 0;
+    unsigned char g = 0; //STR00
+    int gamble = g;
 
     cout << "Enter an amount to gamble: ";
     cin >> gamble;
@@ -251,17 +273,18 @@ void gamble(ATMAccount *account){
         cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
         account->withdrawal(gamble);
     }
+
+    cout << "New Account Balance: " << account->checkBalance() << "\n";
 }
 
 
 /*
     create a check
-    use Rule FIO50 DLC57
+    use Rule FIO50 DLC57 ERR55, ERR59
 */
 void create_check(ATMAccount *account)
 {
-    
-    
+
     int amount ;
     string recipient;
     cout << "Check creation:" << endl;
@@ -273,10 +296,10 @@ void create_check(ATMAccount *account)
     cout << endl;
 
     try
-    {
-        string fileName = "Check"+ to_string(account->getNumCheck());
+    {//FIO50
+        string fileName = "Check"+ to_string(account->getNumCheck()); //STR52 - valid reference to a basic_string
         fstream myFile(fileName, ios::in | ios::out | ios::trunc);
-            
+
         myFile << "To : "<< recipient << endl ;
         myFile << "Amount : " << amount << " dollars"<<endl;
         myFile << "From : " << account->getAccountName()<<endl;
@@ -294,10 +317,10 @@ void create_check(ATMAccount *account)
 
         myFile.close();
     }
-    catch(const std::exception& e)
+    catch(const std::exception& e)//DCL 57
     {
         std::cerr << e.what() << '\n';
-        fclose(myFile);
+        exit(1);
     }
 
 
@@ -305,7 +328,7 @@ void create_check(ATMAccount *account)
     string validator;
     cin >> validator;
     cout << endl;
-    if(validator=="y")
+    if(validator=="y") //EXP20 rec
     {
         account->withdrawal(amount);
         account->setNumCheck();
