@@ -381,6 +381,20 @@ void create_check(ATMAccount *account)
         cout<< endl;
 
         myFile.close();
+
+        cout << "Is the information correct (y/n): ";
+        string validator;
+        cin >> validator;
+        cout << endl;
+        if(validator=="y") //EXP20 rec
+        {
+            account->withdrawal(amount);
+            account->setNumCheck();
+        }
+        else
+        {
+            create_check(account);
+        }
     }
     catch(const std::exception& e)//DCL 57 //ERR54 - This is the lowest level of derived exception
     {
@@ -389,18 +403,6 @@ void create_check(ATMAccount *account)
     }
 
 
-    cout << "Is the information correct (y/n): ";
-    string validator;
-    cin >> validator;
-    cout << endl;
-    if(validator=="y") //EXP20 rec
-    {
-        account->withdrawal(amount);
-        account->setNumCheck();
-    }
-    else
-    {
-        create_check(account);
-    }
+    
 
 }
