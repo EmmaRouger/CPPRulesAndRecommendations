@@ -25,6 +25,6 @@ void ATMAccount::withdrawal( int amount ) //EXP55
 void ATMAccount::deposit( int amount )
 { this->balance += amount; }
 
-template <nameType... Args>
-void ATMAccount::deposit(Args... args) //DCL50 - variadic function defined using function parameter packs
-{ this->balance += (args...); }
+template <typename... Args>
+void ATMAccount::deposit(Args... args)//DCL50 - variadic function defined using function parameter packs
+    { this->balance += (args+...); }
