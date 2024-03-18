@@ -1,3 +1,4 @@
+//CTR50-CPP. Guarantee that container indices and iterators are within the valid range
 #include <iostream>
 #include <string>
 

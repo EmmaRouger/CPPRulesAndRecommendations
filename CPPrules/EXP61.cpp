@@ -1,3 +1,4 @@
+//EXP61-CPP. A lambda object must not outlive any of its reference captured objects
 #include <iostream>
 #include <functional>
 

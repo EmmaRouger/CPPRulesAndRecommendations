@@ -1,4 +1,4 @@
-//Rule EXP60-CPP
+//EXP60-CPP. Do not pass a nonstandard-layout type object across execution boundaries
 
 #include <iostream>
 

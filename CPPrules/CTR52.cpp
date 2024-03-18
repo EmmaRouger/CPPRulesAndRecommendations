@@ -1,3 +1,4 @@
+//CTR52-CPP. Guarantee that library functions do not overflow
 #include <iostream>
 using namespace std;
 

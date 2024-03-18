@@ -1,4 +1,4 @@
-//Rule CTR54-CPP
+//CTR54-CPP. Do not subtract iterators that do not refer to the same container
 
 #include <iostream>
 #include <vector>
