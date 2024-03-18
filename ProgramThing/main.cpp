@@ -2,6 +2,7 @@
 #include "ATMAccount.h"
 #include <random>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 
@@ -9,11 +10,13 @@ void gamble (ATMAccount *account);
 void printMenu1(void); //uses DCL20 - use void when a method takes no parameters
 void printMenu2(void); //DCL20
 void create_check(ATMAccount *account);
+int * shuffle(int copyMe [], int size);
 
 
 /*
     main function
     uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54
+    uses Recommendations EXP15
 */
 int main(){
     int accountNumCounter = 2;
@@ -154,7 +157,7 @@ int main(){
                         create_check(account);
                     }
                     else if(choice == 5){
-                        gamble( &(vect.at(getAccountNum)));
+                        gamble( &(vect.at(getAccountNum-1)));
                     }
                 }while(choice != 6);
                 delete account; //MEM51, MEM53
@@ -244,44 +247,94 @@ void gamble(ATMAccount *account){
     int randomArr [20] = {0};
     for (int i = 0; i < 20; i++)
     {
-        randomArr[i] = engine % 99;
+        randomArr[i] = engine() % 99;
     }
     
-    cout << "\nPlease type a number between 0 & 10: ";
+    cout << "\nPlease select a number from the list: \n";
+    for (int i : randomArr)
+    {
+        cout << i << " | ";
+    }
 
+    // Shuffle
+    int * shuffledArr = shuffle(randomArr, (sizeof(randomArr)/sizeof(randomArr[0])));
+    
+
+    vector<int> lucky;
+    for (int i = 0; i < 5; i++)
+    {   
+        int temp = *(shuffledArr+i);
+        lucky.push_back(temp);
+    }
+    
+    vector<int> unlucky;
+    for (int i = 19; i > 14; i--)
+    {
+        int temp = *(shuffledArr + i);
+        unlucky.push_back(temp);
+    }
+    cout << "\nEnter Here: ";
     int input = 0;
     bool validInput = false;
     cin >> input;
 
     while (!validInput){
-        if (input >= 0 && input <= 10)
+        if (input >= 0 && input <= 99)
         {
             validInput = true;
         }
         else
         {
-            cout << "\nInvalid guess. Please type a numnber between 0 & 10: ";
+            cout << "\nInvalid guess. Please type a numnber from the list: ";
+            for (int i : randomArr)
+            {
+                cout << i << " | ";
+            }
             cin >> input;
         }
     }
+    
+    vector<int>::iterator luckySearch = find(lucky.begin(), lucky.end(), input);
+    vector<int>::iterator unluckySearch = find(unlucky.begin(), unlucky.end(), input);
 
-    if (input == lucky) // Big Win
+    if (luckySearch != lucky.end()) // Big Win
     {
-        cout << "You got it! Lucky you! Depositing: " << gamble*3 << " into your account.\n";
+        cout << "\nYou got it! Lucky you! Depositing: " << gamble*3 << " into your account.\n";
         account->deposit(gamble*3);
     }
-    else if (input == unlucky) //Big Lose
+    else if (unluckySearch != unlucky.end()) //Big Lose
     {
-        cout << "Yeouch! How unfortunate, you got the unlucky number... Removing: " << gamble*2 << " from your account.\n";
+        cout << "\nYeouch! How unfortunate, you got the unlucky number... Removing: " << gamble*2 << " from your account.\n";
         account->withdrawal(gamble*2);
     }
     else // Lose
     {
-        cout << "Darn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
+        cout << "\nDarn. Ya didn't get the unlucky number atleast! Removing: " << gamble << " from your account.\n";
         account->withdrawal(gamble);
     }
 
     cout << "New Account Balance: " << account->checkBalance() << "\n";
+    delete[] shuffledArr;
+}
+/*
+
+    Creates a copy of a given array and shuffles the copied array
+    Uses CTR52
+*/
+int * shuffle(int copyMe [], int size){
+    int * shuffledArr = new int [20] {0};
+    int * shuffledArrPtr = shuffledArr;
+    for (int i = 0; i < size; i++)
+    {
+        shuffledArr[i] = copyMe[i];
+    }
+    
+    random_device fate;
+    minstd_rand0 engine(fate());
+
+    shuffle(shuffledArr, shuffledArr + size, default_random_engine(engine()));
+
+    return shuffledArrPtr;
 }
 
 
