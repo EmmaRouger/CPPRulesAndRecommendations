@@ -19,7 +19,7 @@ int * shuffle(int copyMe [], int size);
 //MEM57 - Did not use default operator new for over-alignment types
 /*
     main function
-    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54 EXP53
+    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 EXP62 DCL53 DCL57 DCL51 STR51 CTR54 EXP53 CTR51
     uses Recommendations EXP15
 */
 int main(){
@@ -112,7 +112,7 @@ int main(){
             }
             else
             {
-                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list //Follows MEM52 - no need to check for null
+                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR51 CTR55 - Don't access nonexistent element in a list //Follows MEM52 - no need to check for null
                 cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
