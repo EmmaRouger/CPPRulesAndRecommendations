@@ -8,7 +8,7 @@ int main() {
     int result = MAX(x, y + 1); 
 
 
-    std::cout << "Result 1: " << result1 << std::endl;
+    std::cout << "Result: " << result << std::endl;
 
     return 0;
 }
