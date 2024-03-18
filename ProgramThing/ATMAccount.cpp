@@ -13,8 +13,10 @@ bool ATMAccount::checkEnteredPin(int enteredPin) //follows MSC52 - value returni
 
 void ATMAccount::withdrawal( int amount ) //EXP55
 {
-    if(this->balance > amount)
-        this->balance = this->balance-amount;
+    if(this->balance > amount) //STR53 - Checks that the balance is within the range of the amount the person is able to withdraw
+                               //EXP15 - No semicolon after the if statement
+        #define withdraw(a, b) (a-b)//PRE01
+        this->balance = withdraw(this->balance, amount); 
     else
         cout<<"Insufficient Funds";
 
@@ -22,3 +24,7 @@ void ATMAccount::withdrawal( int amount ) //EXP55
 
 void ATMAccount::deposit( int amount )
 { this->balance += amount; }
+
+template <nameType... Args>
+void ATMAccount::deposit(Args... args) //DCL50 - variadic function defined using function parameter packs
+{ this->balance += (args...); }
