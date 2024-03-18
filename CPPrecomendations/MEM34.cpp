@@ -1,4 +1,4 @@
-//only free memory allocated dynamically
+//MEM34-C. Only free memory allocated dynamically
 //Mason Myre
 
 #include <iostream>

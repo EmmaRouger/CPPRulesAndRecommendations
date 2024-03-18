@@ -1,4 +1,4 @@
-//Recommendation INT18-C
+//INT18-C. Evaluate integer expressions in a larger size before comparing or assigning to that size
 
 #include <iostream>
 #include <limits.h>

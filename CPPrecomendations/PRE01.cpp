@@ -1,3 +1,4 @@
+//PRE01-C. Use parentheses within macros around parameter names
 #include <iostream>
 
 using namespace std;

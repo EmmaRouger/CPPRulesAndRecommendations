@@ -1,3 +1,4 @@
+//EXP15-C. Do not place a semicolon on the same line as an if, for, or while statement
 #include <iostream>
 #include <cstdio>
 #include <ostream>

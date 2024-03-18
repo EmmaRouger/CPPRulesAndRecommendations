@@ -1,3 +1,4 @@
+//PRE02-C. Macro replacement lists should be parenthesized
 #include <iostream>
 
 // Corrected macro with parenthesized replacement list
