@@ -1,4 +1,5 @@
 //Mason Myre
+//CON52-CPP. Prevent data races when accessing bit-fields from multiple threads
 #include <iostream>
 using namespace std;
 struct t {

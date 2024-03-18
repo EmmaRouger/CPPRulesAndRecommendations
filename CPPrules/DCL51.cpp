@@ -1,3 +1,4 @@
+//DCL51-CPP. Do not declare or define a reserved identifier
 #include <iostream>
 
 //everything uses a user defined

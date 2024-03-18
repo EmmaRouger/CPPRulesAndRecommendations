@@ -1,3 +1,4 @@
+//CON51-CPP. Ensure actively held locks are released on exceptional conditions
 #include <iostream>
 #include <thread>
 #include <mutex>

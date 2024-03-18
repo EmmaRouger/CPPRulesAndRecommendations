@@ -1,3 +1,4 @@
+//DCL57-CPP. Do not let exceptions escape from destructors or deallocation functions
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

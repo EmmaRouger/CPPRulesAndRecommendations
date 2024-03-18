@@ -1,3 +1,4 @@
+//ERR56-CPP. Guarantee exception safety
 #include <iostream>
 using namespace std;
 

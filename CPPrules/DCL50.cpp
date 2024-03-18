@@ -1,3 +1,4 @@
+//DCL50-CPP. Do not define a C-style variadic function
 #include <iostream>
 
 using namespace std;
