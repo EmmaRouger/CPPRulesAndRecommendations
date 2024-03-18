@@ -1,12 +1,12 @@
-//Recommendation PRE10-C
+//Recommendation PRE10-C and PRE02
 
 #include <iostream>
 
 #define SWAP(x, y) \
   do { \
-    if ((x) < (y)) { \
+    if ((x) < (y)) { \ //PRE02
       int temp = (x); \
-      (x) = (y); \
+      (x) = (y); \ //PRE02
       (y) = temp; \
     } else { \
       std::cout<<"The first number is greater than the second"<<std::endl; \
