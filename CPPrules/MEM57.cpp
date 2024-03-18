@@ -1,4 +1,4 @@
-
+//MEM57-CPP. Avoid using default operator new for over-aligned types
 #include <iostream>
 #include <cstdlib>
 
@@ -14,9 +14,9 @@ struct alignas(16) my_struct{
             return ptr;
         }
         throw std::bad_alloc();
-        
+
     }
-    static void operator delete(void *ptr) 
+    static void operator delete(void *ptr)
     {
         std::cout<<"deallocating ptr"<<std::endl;
         free(ptr);
