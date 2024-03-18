@@ -31,6 +31,7 @@ public:
 //possibly change so it returns new balance?
     void withdrawal( int amount );
     void deposit ( int amount );
+    void deposit (Args... args);
 
     bool checkEnteredPin( int enteredPin );
 };

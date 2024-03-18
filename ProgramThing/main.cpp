@@ -160,7 +160,8 @@ int main(){
                         gamble( &(vect.at(getAccountNum-1)));
                     }
                 }while(choice != 6);
-                delete account; //MEM51, MEM53
+                delete account; //MEM51, MEM53,
+                //MEM160 - not accessing freed memory after it was deleted
             //should have a choice to exit to main menu
             }
         }
