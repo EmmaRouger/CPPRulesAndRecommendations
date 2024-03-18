@@ -32,6 +32,7 @@ public:
 //possibly change so it returns new balance?
     void withdrawal( int amount );
     void deposit ( int amount );
+    template <typename... Args>
     void deposit (Args... args);
 
     bool checkEnteredPin( int enteredPin );
