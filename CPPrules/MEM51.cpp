@@ -1,3 +1,4 @@
+//MEM51-CPP. Properly deallocate dynamically allocated resources
 #include <iostream>
 
 int main() {

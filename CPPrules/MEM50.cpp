@@ -1,3 +1,4 @@
+//MEM50-CPP. Do not access freed memory
 #include <iostream>
 #include <string>
 #include <new>

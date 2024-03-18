@@ -1,4 +1,4 @@
-//Rule OOP58-CPP
+//OOP58-CPP. Copy operations must not mutate the source object
 
 #include <iostream>
 

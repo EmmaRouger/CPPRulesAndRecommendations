@@ -1,3 +1,4 @@
+//STR50-CPP. Guarantee that storage for strings has sufficient space for character data and the null terminator
 #include <iostream>
 #include <string>
 

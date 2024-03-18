@@ -1,3 +1,4 @@
+//INT50-CPP. Do not cast to an out-of-range enumeration value
 #include <iostream>
 
 using namespace std;

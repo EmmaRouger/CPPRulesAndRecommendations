@@ -1,4 +1,4 @@
-//Rule MEM53-CPP
+//MEM53-CPP. Explicitly construct and destruct objects when manually managing object lifetime
 
 #include <iostream>
 

@@ -1,3 +1,4 @@
+//STR51-CPP. Do not attempt to create a std::string from a null pointer
 #include <iostream>
 #include <string>
 #include <cstring>

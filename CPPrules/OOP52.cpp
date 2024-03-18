@@ -1,3 +1,4 @@
+//OOP54-CPP. Gracefully handle self-copy assignment
 #include <iostream>
 
 using namespace std;

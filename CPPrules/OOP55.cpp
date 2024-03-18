@@ -1,3 +1,4 @@
+//OOP55-CPP. Do not use pointer-to-member operators to access nonexistent members
 #include <iostream>
 
 class MyClass {

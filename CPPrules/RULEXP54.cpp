@@ -1,3 +1,4 @@
+//EXP54-CPP. Do not access an object outside of its lifetime
 #include <iostream>
 using namespace std;
 /*      

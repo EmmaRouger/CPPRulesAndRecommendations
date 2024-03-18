@@ -1,3 +1,4 @@
+//MSC51-CPP. Ensure your random number generator is properly seeded
 #include <iostream>
 #include <random>
 using namespace std;

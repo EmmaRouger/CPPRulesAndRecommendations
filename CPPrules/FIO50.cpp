@@ -1,3 +1,4 @@
+//FIO50-CPP. Do not alternately input and output from a file stream without an intervening positioning call
 #include <iostream>
 #include <fstream>
 #include <string>
