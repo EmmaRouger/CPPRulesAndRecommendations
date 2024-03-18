@@ -246,7 +246,7 @@ void gamble(ATMAccount *account){
     //     unlucky = engine() % 10;
     // }
 
-    int randomArr [20] = {0}; //ARR02
+    int randomArr [20] = {0}; //ARR02 - Declare the size of the array
     for (int i = 0; i < 20; i++)
     {
         randomArr[i] = engine() % 99;
