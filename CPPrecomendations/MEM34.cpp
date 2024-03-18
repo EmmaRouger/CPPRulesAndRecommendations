@@ -12,7 +12,6 @@ public:
   c(int s){
     size = s;
     arr = new int[size];
-    cout << "test 2a" << size << "\n";
     for(int i = 0; i < s; i++){
       arr[i] = i + 1;
     }
@@ -30,17 +29,11 @@ public:
   }
 };
 
-
 int main() {
   /* code */
   int a = 12;
   c example(a);
-  cout << "test1a \n";
   example.print();
 
-  return 0;
+  return 0
 }
-
-
-
-//spacing
