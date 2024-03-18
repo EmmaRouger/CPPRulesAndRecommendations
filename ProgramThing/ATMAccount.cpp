@@ -13,7 +13,8 @@ bool ATMAccount::checkEnteredPin(int enteredPin) //follows MSC52 - value returni
 
 void ATMAccount::withdrawal( int amount ) //EXP55
 {
-    if(this->balance > amount)
+    if(this->balance > amount) //STR53 - Checks that the balance is within the range of the amount the person is able to withdraw
+                               //EXP15 - No semicolon after the if statement
         this->balance = this->balance-amount;
     else
         cout<<"Insufficient Funds";
