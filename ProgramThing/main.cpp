@@ -14,7 +14,8 @@ int * shuffle(int copyMe [], int size);
 
 //DLC58-CPP  -  we never modify the standared namespaces
 //EXP63 - Never moved values so we never rely on moved-from object assumptions
-////DLC52-CPP - Never use Const on a reference Type
+//DLC52-CPP - Never use Const on a reference Type
+//MEM03-C - No sensitive data is used to be sanitized
 /*
     main function
     uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54 EXP53
