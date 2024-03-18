@@ -1,12 +1,18 @@
 #include <iostream>
 #include <string>
+#include <cstring>
+#include <random>
 
 int main() {
     char* strPtr = nullptr; 
-
-    if(rand() % 2 == 0)//50% chance to happen
+    std::random_device randDevice;
+    std::minstd_rand0 engine(randDevice());
+ 
+    if(engine() %2 == 0)//50% chance to happen
     {
-        strPtr = ['h','e','l','l','o'];
+        strPtr = new char[14]; // Allocate memory for "Hello, world!" and null terminator
+        strcpy(strPtr, "Hello, world!");
+
     }
 
     std::string str;
