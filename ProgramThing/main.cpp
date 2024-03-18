@@ -12,10 +12,12 @@ void printMenu2(void); //DCL20
 void create_check(ATMAccount *account);
 int * shuffle(int copyMe [], int size);
 
-
+//DLC58-CPP  -  we never modify the standared namespaces
+//EXP63 - Never moved values so we never rely on moved-from object assumptions
+////DLC52-CPP - Never use Const on a reference Type
 /*
     main function
-    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54
+    uses Rule EXP50 EXP60 MEM00 MEM51 MEM53 DCL53 DCL57 DCL51 STR51 CTR54 EXP53
     uses Recommendations EXP15
 */
 int main(){
@@ -108,11 +110,11 @@ int main(){
             }
             else
             {
-                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list
+                ATMAccount *account = &vect[getAccountNum-1]; //follows rule DCL53, EXP60, CTR55 - Don't access nonexistent element in a list //Follows MEM52 - no need to check for null
                 cout<<"Welcome "<< account->getAccountName()<<"\nEnter Pin\n> ";
                 cin>>getPinNum;
                 cout<<"\n";
-                while(!account->checkEnteredPin(getPinNum)) 
+                while(!account->checkEnteredPin(getPinNum))
                 {
                     cout<<"Incorrect Pin\nEnter a Pin\n> ";
                     cin>>getPinNum;
@@ -160,7 +162,8 @@ int main(){
                         gamble( &(vect.at(getAccountNum-1)));
                     }
                 }while(choice != 6);
-                delete account; //MEM51, MEM53
+                delete account; //MEM51, MEM53,
+                //MEM160 - not accessing freed memory after it was deleted
             //should have a choice to exit to main menu
             }
         }
@@ -170,7 +173,7 @@ int main(){
             cout << "Enter your name on the account: ";
             cin >> name;
             bool found=false;
-            for (auto it = vect.begin(); it != vect.end(); ++it) //CTR54
+            for (auto it = vect.begin(); it != vect.end(); ++it) //CTR54 //CRT53 - Never goes outside the iterator ranges
             {
                 if(it->getAccountName() == name)
                 {
@@ -186,7 +189,6 @@ int main(){
         }
     }while(choice != -1); //EXP 20 rec
 
-    
     vect.clear(); // EXP62 //CTR51 //MEM34
 
 }
@@ -230,9 +232,9 @@ void gamble(ATMAccount *account){
             cin >> gamble;
         }
     }
-    
+
     // MSC51 - Optimal random number generation
-    // 
+    //
     random_device fate;
     minstd_rand0 engine(fate());
 
@@ -244,12 +246,12 @@ void gamble(ATMAccount *account){
     //     unlucky = engine() % 10;
     // }
 
-    int randomArr [20] = {0};
+    int randomArr [20] = {0}; //ARR02 - Declare the size of the array
     for (int i = 0; i < 20; i++)
     {
         randomArr[i] = engine() % 99;
     }
-    
+
     cout << "\nPlease select a number from the list: \n";
     for (int i : randomArr)
     {
@@ -258,15 +260,15 @@ void gamble(ATMAccount *account){
 
     // Shuffle
     int * shuffledArr = shuffle(randomArr, (sizeof(randomArr)/sizeof(randomArr[0])));
-    
+
 
     vector<int> lucky;
     for (int i = 0; i < 5; i++)
-    {   
+    {
         int temp = *(shuffledArr+i);
         lucky.push_back(temp);
     }
-    
+
     vector<int> unlucky;
     for (int i = 19; i > 14; i--)
     {
@@ -324,7 +326,7 @@ void gamble(ATMAccount *account){
 int * shuffle(int copyMe [], int size){
     int * shuffledArr = new int [20] {0};
     int * shuffledArrPtr = shuffledArr;
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++) //CTR50 - makes sure the indices are within the valid range
     {
         shuffledArr[i] = copyMe[i];
     }
@@ -358,7 +360,7 @@ void create_check(ATMAccount *account)
     try
     {//FIO50
         string fileName = "Check"+ to_string(account->getNumCheck()); //STR52 - valid reference to a basic_string
-        fstream myFile(fileName, ios::in | ios::out | ios::trunc);
+        fstream myFile(fileName, ios::in | ios::out | ios::trunc); //FIO01 - accessing file via file descriptors
 
         myFile << "To : "<< recipient << endl ;
         myFile << "Amount : " << amount << " dollars"<<endl;
@@ -377,7 +379,7 @@ void create_check(ATMAccount *account)
 
         myFile.close();
     }
-    catch(const std::exception& e)//DCL 57
+    catch(const std::exception& e)//DCL 57 //ERR54 - This is the lowest level of derived exception
     {
         std::cerr << e.what() << '\n';
         exit(1);

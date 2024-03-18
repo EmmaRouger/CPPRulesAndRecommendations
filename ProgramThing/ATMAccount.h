@@ -1,3 +1,4 @@
+//PRE06-C - Endclosed header files with guards
 #ifndef ATM_ACCOUNT_H
 #define ATM_ACCOUNT_H
 #include <string>
@@ -31,6 +32,8 @@ public:
 //possibly change so it returns new balance?
     void withdrawal( int amount );
     void deposit ( int amount );
+    template <typename... Args>
+    void deposit (Args... args);
 
     bool checkEnteredPin( int enteredPin );
 };
